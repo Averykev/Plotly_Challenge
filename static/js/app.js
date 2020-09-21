@@ -1,8 +1,7 @@
-
 //building out the demographic table
 function demographic(id){
 
-    d3.json("samples.json").then(function(data){
+    d3.json("samples.json").then((data) => {
         
         var demoInfo = d3.select("#sample-metadata")
 
@@ -21,18 +20,51 @@ function demographic(id){
 function optionChanged(id) {
 
     demographic(id)
+    buildPlots(id)
 }
+
+
+// fill out the plots and graphs
+
+function buildPlots(id) {
+
+    d3.json("samples.json").then((data) => {
+
+        var samples = data.samples.filter(person => person.id.toString()===id)[0]
+
+        //console.log(samples)
+
+        var sampleValues = samples.sample_values
+
+        //console.log(sampleValues)
+
+
+
+
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 //initial data function
 function init() {
 
-    var dropdown = d3.select("#selDataset");
+    var dropdownChoices = d3.select("#selDataset");
 
     d3.json("samples.json").then((data) => {
 
-        data.names.forEach(function(name){
-            dropdown.append("option").text(name).property("value");
+        data.names.forEach((name) => {
+            dropdownChoices.append("option").text(name);
         })
 
         demographic(data.names[0])
