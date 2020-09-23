@@ -24,65 +24,38 @@ function optionChanged(id) {
 }
 
 
-// fill out the plots and graphs
-
+//fill out the plots and graphs
 function buildPlots(id) {
 
     d3.json("samples.json").then((data) => {
 
-        //horizontal bar chart
-
         var samples = data.samples.filter(person => person.id.toString()===id)[0]
 
-        //console.log(samples)
+        var sampleValues = samples.sample_values
 
-        var sampleValues = samples.sample_values.slice(0,10).reverse()
+        var sampleTen = samples.sample_values.slice(0,10).reverse()
 
-        //console.log(sampleValues)
+        var otuIds = samples.otu_ids
 
-        var otuIds = samples.otu_ids.slice(0,10).reverse()
+        var otuTen = samples.otu_ids.slice(0,10).reverse()
 
-        otuIds = otuIds.map(otu => "OTU " + otu)
+        otuTen = otuTen.map(otu => "OTU " + otu)
 
-        //console.log(otuIds)
+        var otuLabels = samples.otu_labels
 
-        var otuLabels = samples.otu_labels.slice(0,10).reverse()
-
-        //console.log(otuLabels)
+        var otuLabelTen = samples.otu_labels.slice(0,10).reverse()
 
         var trace1 = {
-            x: sampleValues,
-            y: otuIds,
+            x: sampleTen,
+            y: otuTen,
+            text: otuLabelTen,
             type: "bar",
             orientation: "h"
         }
 
-        var data = [trace1]
+        var barChart = [trace1]
 
-        Plotly.newPlot("bar",data)
-
-    })
-
-
-    d3.json("samples.json").then((data) => {
-
-        //bubble chart
-
-        var samples = data.samples.filter(person => person.id.toString()===id)[0]
-
-        //console.log(samples)
-
-        var otuIds = samples.otu_ids
-
-        //console.log(otuIds)
-
-        var sampleValues = samples.sample_values
-
-        //console.log(sampleValues)
-
-        var otuLabels = samples.otu_labels
-
-        //console.log(otuLabels)
+        Plotly.newPlot("bar",barChart)
 
         var trace2 = {
             x: otuIds,
@@ -96,15 +69,14 @@ function buildPlots(id) {
             }
         }
 
-        var data = [trace2]
+        var bubbleChart = [trace2]
 
-        Plotly.newPlot("bubble", data)
-
+        Plotly.newPlot("bubble", bubbleChart)
     })
 }
 
 
-//initial data function
+//initial data function for page open
 function init() {
 
     var dropdownChoices = d3.select("#selDataset");
