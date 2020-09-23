@@ -30,30 +30,78 @@ function buildPlots(id) {
 
     d3.json("samples.json").then((data) => {
 
+        //horizontal bar chart
+
         var samples = data.samples.filter(person => person.id.toString()===id)[0]
 
         //console.log(samples)
+
+        var sampleValues = samples.sample_values.slice(0,10).reverse()
+
+        //console.log(sampleValues)
+
+        var otuIds = samples.otu_ids.slice(0,10).reverse()
+
+        otuIds = otuIds.map(otu => "OTU " + otu)
+
+        //console.log(otuIds)
+
+        var otuLabels = samples.otu_labels.slice(0,10).reverse()
+
+        //console.log(otuLabels)
+
+        var trace1 = {
+            x: sampleValues,
+            y: otuIds,
+            type: "bar",
+            orientation: "h"
+        }
+
+        var data = [trace1]
+
+        Plotly.newPlot("bar",data)
+
+    })
+
+
+    d3.json("samples.json").then((data) => {
+
+        //bubble chart
+
+        var samples = data.samples.filter(person => person.id.toString()===id)[0]
+
+        //console.log(samples)
+
+        var otuIds = samples.otu_ids
+
+        //console.log(otuIds)
 
         var sampleValues = samples.sample_values
 
         //console.log(sampleValues)
 
+        var otuLabels = samples.otu_labels
 
+        //console.log(otuLabels)
 
+        var trace2 = {
+            x: otuIds,
+            y: sampleValues,
+            type: "bubble",
+            mode: "markers",
+            text: otuLabels,
+            marker: {
+                color: otuIds,
+                size: sampleValues 
+            }
+        }
+
+        var data = [trace2]
+
+        Plotly.newPlot("bubble", data)
 
     })
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 //initial data function
@@ -68,6 +116,7 @@ function init() {
         })
 
         demographic(data.names[0])
+        buildPlots(data.names[0])
     })
 }
 
