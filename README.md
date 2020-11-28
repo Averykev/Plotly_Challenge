@@ -1,5 +1,7 @@
 # Plotly_Challenge
 
+INSTRUCTIONS:  To view this project just visit https://averykev.github.io/Plotly_Challenge/
+
 Belly Button Bio-Diversity Dashboard: 
 
 1.)  The first step I took in building out this webpage was to create the "init" function that was to run whenever the page was loaded.  With this function I used
