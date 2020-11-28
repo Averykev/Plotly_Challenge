@@ -1,6 +1,6 @@
 # Plotly_Challenge
 
-SUMMARY:
+Belly Button Bio-Diversity Dashboard: 
 
 1.)  The first step I took in building out this webpage was to create the "init" function that was to run whenever the page was loaded.  With this function I used
 d3 to select the correct dropdown bar on the index.html and I used the data to read in the different "options" that would be available in the dropdown.  I used the 
